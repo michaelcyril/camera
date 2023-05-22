@@ -329,7 +329,7 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       Text(""),
                       Icon(
-                        Icons.add_circle,
+                        Icons.favorite,
                         color: Colors.black26,
                       )
                     ],
@@ -399,7 +399,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text("News"),
+                    child: Text("About"),
                   )
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/constant/app_color.dart';
 import 'package:camera/helper/database.dart';
 import 'package:camera/single_image.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,16 @@ import 'package:image_picker/image_picker.dart';
 class GalleryPage extends StatefulWidget {
   @override
   _GalleryPageState createState() => _GalleryPageState();
+
+  static void reload(BuildContext context) {
+    print('here------------------');
+    _GalleryPageState? state =
+        context.findAncestorStateOfType<_GalleryPageState>();
+    state?.changeState();
+  }
 }
 
 class _GalleryPageState extends State<GalleryPage> {
-
   @override
   void initState() {
     super.initState();
@@ -19,8 +26,14 @@ class _GalleryPageState extends State<GalleryPage> {
     // message = 'Welcome to Flutter!';
     _pickImages();
   }
+
   List<File> _images = [];
   List<int> _ids = [];
+
+  changeState() {
+    print("object --------------------------");
+    setState(() {});
+  }
 
   Future<void> _pickImages() async {
     // final imagePicker = ImagePicker();
@@ -28,11 +41,11 @@ class _GalleryPageState extends State<GalleryPage> {
     final dbHelper = DBHelper();
     final imagesData = await dbHelper.getImages();
 
-
     if (imagesData != null) {
       setState(() {
-        _images = imagesData.map((pickedImage) => File(pickedImage['path'])).toList();
-        for(var data in imagesData){
+        _images =
+            imagesData.map((pickedImage) => File(pickedImage['path'])).toList();
+        for (var data in imagesData) {
           _ids.add(data['id']);
         }
       });
@@ -44,6 +57,7 @@ class _GalleryPageState extends State<GalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.defaultcard,
         title: Text('Gallery'),
       ),
       body: GridView.builder(
@@ -54,11 +68,14 @@ class _GalleryPageState extends State<GalleryPage> {
           mainAxisSpacing: 4,
         ),
         itemBuilder: (context, index) {
-          return InkWell(child: Image.file(_images[index]),
-            onTap: (){
+          return InkWell(
+            child: Image.file(_images[index]),
+            onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  SingleImagePage(id: _ids[index], imageUrl: _images[index])),
+                MaterialPageRoute(
+                    builder: (context) => SingleImagePage(
+                        id: _ids[index], imageUrl: _images[index])),
               );
             },
           );

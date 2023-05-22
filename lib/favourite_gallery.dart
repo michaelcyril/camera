@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/constant/app_color.dart';
 import 'package:camera/favourite_single_image.dart';
 import 'package:camera/helper/database.dart';
 import 'package:camera/single_image.dart';
@@ -45,6 +46,8 @@ class _GalleryPageState extends State<FavouriteGalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.defaultcard,
+
         title: Text('Gallery'),
       ),
       body: GridView.builder(
